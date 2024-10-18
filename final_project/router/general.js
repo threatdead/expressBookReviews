@@ -26,7 +26,7 @@ public_users.post("/register", (req,res) => {
 public_users.get('/',async function(req, res) {
 
   return new Promise((resolve, reject) => {
-    resolve(res.status(300).json((JSON.stringify(books, null, 4))));
+    resolve(res.status(300).json(books));
   });
  
 });
@@ -53,7 +53,7 @@ public_users.get('/author/:author', async function (req, res) {
     const response = await axios.get('http://localhost:5000/books'); 
     const booksByAuthor = Object.values(response.data).filter(book => book.author.toLowerCase() === author);
     if (booksByAuthor.length > 0) {
-      return res.status(200).json(booksByAuthor);
+      return res.status(200).json({"booksByAuthor" : booksByAuthor});
     } else {
       return res.status(404).json({ message: "No books found by this author" });
     }
@@ -78,8 +78,6 @@ public_users.get('/title/:title', async function (req, res) {
   }catch(error){
     return res.status(500).json({ message: "Error fetching books by title" });
   }
-
-
 });
 
 //  Get book review
